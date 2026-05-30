@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio - Cozinha da Xuxu</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<main class="cardapio">
+    <header class="topo">
+        <h1 class="titulo-principal">Cardápio</h1>
+
+        <div class="logo">
+            <div>
+                <img src="img/logo.png" alt="Logo" width="200" height="200">
+            </div>
+        </div>
+    </header>
+
+    <section class="painel prato-dia">
+        <div class="flex-title-dia">
+            <div class="tag-central">
+                <span class="tag-preta">Prato do Dia</span>
+            </div>
+
+            <div class="placeholder">
+                <img id="imgPratoDia" src="img/prato-dia.jpg" alt="Prato do Dia">
+            </div>
+        </div>
+        <div class="flex-content-dia">
+        <div class="preco-grande">
+            <div class="rs">R$</div>
+            <div class="valor">20,00</div>
+        </div>
+        <div class="info-prato-dia">
+            <ul class="lista-prato" id="listaPratoDia"></ul>
+        </div>
+        </div>
+
+    </section>
+
+    <section class="cards-centro">
+        <article class="card-produto">
+            <div class="cabecalho-card">
+                <h3>Salada</h3>
+                <p>Frango <strong>R$20</strong></p>
+                <p>Carne <strong>R$23</strong></p>
+                <p>Tilápia <strong>R$26</strong></p>
+            </div>
+
+            <div class="foto-card">
+                <img id="imgSalada" src="img/salada.png" alt="Salada">
+            </div>
+
+            <div class="ingredientes-titulo">Ingredientes da Salada</div>
+            <div class="ingredientes-salada">
+                <div>Milho</div>
+                <div>Alface</div>
+                <div>Rúcula</div>
+                <div>Tomate</div>
+                <div>Beterraba</div>
+                <div>Cenoura</div>
+            </div>
+        </article>
+
+        <article class="card-produto">
+            <div class="cabecalho-card">
+                <h3>Luís</h3>
+                <p>Frango <strong>R$23</strong></p>
+                <p>Carne <strong>R$26</strong></p>
+                <p>Tilápia <strong>R$28</strong></p>
+            </div>
+
+            <div class="foto-card">
+                <img id="imgLuis" src="img/luis.png" alt="Luis">
+            </div>
+
+            <div class="lista-combo">
+                <div class="linha-item">Arroz <span></span></div>
+                <div class="linha-item">Feijão <span></span></div>
+                <div class="linha-item">Salada <span></span></div>
+                <div class="linha-item">Proteína <span></span></div>
+            </div>
+        </article>
+
+        <article class="card-produto">
+            <div class="cabecalho-card">
+                <h3>Barça</h3>
+                <p>Frango, Carne<br />ou Tilápia <strong>R$30</strong></p>
+            </div>
+
+            <div class="foto-card">
+                <img id="imgBarca" src="img/barca.png" alt="Barça">
+            </div>
+
+            <div class="lista-combo">
+                <div class="linha-item">Arroz <span></span></div>
+                <div class="linha-item">Salada <span></span></div>
+                <div class="linha-item">Fritas <span></span></div>
+                <div class="linha-item">Proteína <span></span></div>
+                <div class="linha-item">Anel de Cebola <span></span></div>
+            </div>
+        </article>
+    </section>
+
+    <section class="painel rodape">
+        <div class="monte-prato">
+            <span class="tag-preta">Monte seu Prato</span>
+            <h4><small>Escolha seus</small>Adicionais</h4>
+        </div>
+
+        <div class="adicionais">
+
+            <div class="lista-adicionais">
+                <div class="adicional"><span>Filé de Tilápia</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
+                <div class="adicional"><span>Farofa</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
+
+                <div class="adicional"><span>Filé de Frango</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
+                <div class="adicional"><span>Cebola</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
+
+                <div class="adicional"><span>Filé de Carne</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
+                <div class="adicional"><span>Vinagrete</span><span class="linha"></span><span class="preco">R$ 5,00</span></div>
+
+                <div class="adicional"><span>Linguiça Fina</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
+                <div class="adicional"><span>Salada</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
+
+                <div class="adicional"><span>Ovo Frito</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>
+                <div class="adicional"><span>Molhos</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>
+
+                <div class="adicional"><span>Arroz Branco</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
+                <div class="adicional"><span>Fritas Individual</span><span class="linha"></span><span class="preco">R$ 8,00</span></div>
+
+                <div class="adicional"><span>Feijão Carioca</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
+                <div class="adicional"><span>Fritas Cone</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
+
+                <div class="adicional"><span>Macarrão</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
+                <div class="adicional"><span>Fritas & Anel</span><span class="linha"></span><span class="preco">R$ 20,00</span></div>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="js/cardapio.js"></script>
+</body>
+</html>

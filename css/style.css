@@ -1,0 +1,584 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --preto: #050505;
+    --creme: #f4e6db;
+    --creme-claro: #fff8f0;
+    --vermelho: #b31217;
+    --vinho: #8b1e24;
+    --amarelo: #f6c400;
+    --texto: #111;
+    --linha: #cfc7bd;
+    --chocolate: #4b2e2b;
+    --verde: #6a8a6c;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #171717;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    color: var(--texto);
+}
+
+.foto-card img,
+.placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-card img {
+    border-radius: 50%;
+}
+
+.cardapio {
+    width: 900px;
+    height: 1600px;
+    background: var(--preto);
+    padding: 22px;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.topo {
+    position: relative;
+    height: 205px;
+    color: white;
+}
+
+.titulo-principal {
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 130px;
+    line-height: 1.5;
+    font-weight: 400;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    text-shadow: 0 3px 0 rgba(255,255,255,0.08);
+    padding-left: 30px;
+}
+
+.subtitulo {
+    margin-top: 20px;
+    font-family: 'Bebas Neue', Arial, sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subtitulo span {
+    color: var(--vermelho);
+}
+
+.ramo {
+    color: var(--amarelo);
+    font-size: 30px;
+    line-height: 1;
+}
+
+.logo {
+    position: absolute;
+    top: -4px;
+    right: 16px;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #111;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 31px;
+    font-weight: 900;
+    line-height: 0.9;
+}
+
+.logo small {
+    display: block;
+    font-size: 20px;
+    margin-top: 8px;
+    color: var(--vermelho);
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.painel {
+    background: linear-gradient(180deg, var(--creme-claro), var(--creme));
+    border-radius: 20px;
+    border: 4px solid var(--preto);
+    padding: 18px;
+}
+
+.prato-dia {
+    display: grid;
+    grid-template-columns: 57% 43%;
+    gap: 20px;
+    height: 470px;
+    margin-bottom: 16px;
+}
+
+.tag-preta {
+    background: var(--preto);
+    color: white;
+    border-radius: 12px;
+    display: inline-block;
+    padding: 9px 30px;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 45px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1;
+    width: -webkit-fill-available;
+}
+
+.tag-central {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.placeholder {
+    width: 100%;
+    height: 355px;
+    border-radius: 16px;
+    border: 3px dashed #a89d93;
+    background: repeating-linear-gradient(45deg, #ddd, #ddd 12px, #e9e2db 12px, #e9e2db 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #5d5650;
+    font-size: 23px;
+    font-weight: 800;
+}
+.placeholder img {
+    border-radius: 16px;
+}
+
+.flex-title-dia, .flex-content-dia {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-prato-dia {
+    padding: 76px 6px 0;
+    position: relative;
+}
+
+.info-prato-dia h2 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 58px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.decoracao-linha {
+    height: 1px;
+    background: #9e958e;
+    width: 235px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.decoracao-linha::after {
+    content: "◆";
+    position: absolute;
+    left: 50%;
+    top: -11px;
+    transform: translateX(-50%);
+    background: var(--creme-claro);
+    padding: 0 8px;
+    font-size: 18px;
+}
+
+.lista-prato li {
+    list-style: none;
+    font-size: 21px;
+    margin: -5px 0;
+    font-weight: 800;
+}
+
+.lista-prato li::before {
+    content: "•";
+    color: var(--vermelho);
+    font-size: 31px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.preco-grande {
+    margin-right: 8px;
+    border-radius: 14px;
+    background: var(--preto);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+}
+
+.preco-grande .rs {
+    color: var(--amarelo);
+    font-size: 40px;
+    line-height: .8;
+}
+
+.preco-grande .valor {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 45px;
+    font-weight: 400;
+}
+
+.cards-centro {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    height: 570px;
+    margin-bottom: 16px;
+}
+
+.card-produto {
+    background: linear-gradient(180deg, var(--creme-claro), var(--creme));
+    border-radius: 18px;
+    border: 3px solid var(--preto);
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.cabecalho-card {
+    background: var(--preto);
+    color: white;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    height: 132px;
+}
+
+.cabecalho-card h3 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 48px;
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-bottom: 0;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.cabecalho-card p {
+    font-size: 21px;
+    line-height: 1.22;
+    font-weight: 800;
+}
+
+.cabecalho-card strong {
+    color: var(--amarelo);
+    margin-left: 6px;
+}
+
+.foto-card {
+    height: 245px;
+    margin: 16px 0 10px;
+    border-radius: 50%;
+    border: 3px dashed #a89d93;
+    background: repeating-linear-gradient(45deg, #ddd, #ddd 10px, #e9e2db 10px, #e9e2db 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 19px;
+    color: #5d5650;
+    font-weight: 800;
+}
+
+.ingredientes-titulo {
+    background: var(--vermelho);
+    color: white;
+    text-align: center;
+    border-radius: 9px;
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: .3px;
+}
+
+.ingredientes-salada {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 18px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.ingredientes-salada div::before,
+.linha-item::before {
+    content: "●";
+    color: var(--vermelho);
+    margin-right: 8px;
+    font-size: 11px;
+}
+
+.lista-combo {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.linha-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.linha-item span {
+    display: none;
+    border-bottom: 1px solid #aaa;
+    height: 1px;
+}
+
+.rodape {
+    grid-template-columns: 40% 60%;
+    gap: 16px;
+}
+.monte-prato {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.monte-prato .tag-preta {
+    font-size: 37px;
+    padding-inline: 22px;
+    line-height: 1;
+    height: 50px;
+    line-height: 1;
+    width: auto;
+}
+
+.monte-prato .placeholder {
+    height: 190px;
+    margin-top: 14px;
+    border-radius: 16px;
+}
+
+.adicionais {
+    padding: 4px 14px;
+}
+
+.painel h4 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 45px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 0.85;
+}
+
+.painel h4 small {
+    display: block;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: .8px;
+}
+
+.lista-adicionais {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px 0;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.adicional {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 6px;
+    align-items: center;
+}
+
+.adicional::before {
+    content: "●";
+    color: var(--preto);
+    font-size: 8px;
+}
+
+.adicional span:nth-child(1) {
+    white-space: nowrap;
+}
+
+.adicional .linha {
+    display: none;
+    border-bottom: 1px solid #aaa;
+    height: 1px;
+}
+
+.adicional .preco {
+    color: var(--vermelho);
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+@media (max-width: 940px) {
+    body {
+        padding: 0;
+        background: var(--preto);
+    }
+
+    .cardapio {
+        transform-origin: top center;
+        width: 900px;
+        height: 1600px;
+        box-shadow: none;
+    }
+}
+
+@media print {
+    @page {
+        size: 900px 1600px;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        background: white;
+    }
+
+    .cardapio {
+        width: 900px;
+        height: 1600px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+/* ================== MODAL ADMIN ================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.modal-admin {
+    background: var(--creme);
+    color: var(--texto);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--preto);
+}
+
+.modal-admin h2 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+.modal-admin h3 {
+    margin: 20px 0 10px;
+    font-size: 20px;
+}
+
+.admin-img-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.admin-img-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    background: #eee;
+}
+
+.admin-ingredientes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.ing-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.ing-item input {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+button {
+    background: var(--vermelho);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--vinho);
+}
+
+.btn-remover-ing {
+    background: #555;
+    padding: 4px 10px;
+}
+
