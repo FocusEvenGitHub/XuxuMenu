@@ -6,10 +6,25 @@ const STORAGE_KEYS = {
     salada: 'img_salada',
     luis: 'img_luis',
     barca: 'img_barca',
-    ingredientes: 'ingredientes_pratoDia'
+    ingredientes: 'ingredientes_pratoDia',
+    precoPratoDia: 'preco_pratoDia'
 };
 
-// Redimensiona e converte imagem para data URL (maxLado em px)
+// ---------- PREÇO ----------
+function obterPrecoPratoDia() {
+    return localStorage.getItem(STORAGE_KEYS.precoPratoDia) || '20,00';
+}
+
+function salvarPrecoPratoDia(preco) {
+    localStorage.setItem(STORAGE_KEYS.precoPratoDia, preco);
+}
+
+function atualizarPrecoNaTela() {
+    const el = document.getElementById('precoPratoDia');
+    if (el) el.textContent = obterPrecoPratoDia();
+}
+
+// ---------- IMAGENS (redimensionamento e conversão para base64) ----------
 function fileToDataUrl(file, maxLado = 400) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -35,24 +50,20 @@ function fileToDataUrl(file, maxLado = 400) {
     });
 }
 
-// Salva uma imagem no localStorage
 function salvarImagem(chave, dataUrl) {
     localStorage.setItem(STORAGE_KEYS[chave], dataUrl);
 }
 
-// Obtém uma imagem do localStorage
 function obterImagem(chave) {
     return localStorage.getItem(STORAGE_KEYS[chave]);
 }
 
-// Carrega a imagem salva para um elemento <img> (por ID)
 function carregarImagemNaTela(chave, idImg) {
     const dataUrl = obterImagem(chave);
     const img = document.getElementById(idImg);
     if (dataUrl && img) img.src = dataUrl;
 }
 
-// Atualiza todas as imagens do cardápio
 function atualizarTodasImagens() {
     carregarImagemNaTela('pratoDia', 'imgPratoDia');
     carregarImagemNaTela('salada', 'imgSalada');
@@ -60,7 +71,7 @@ function atualizarTodasImagens() {
     carregarImagemNaTela('barca', 'imgBarca');
 }
 
-// ================== INGREDIENTES ==================
+// ---------- INGREDIENTES ----------
 function obterIngredientes() {
     const json = localStorage.getItem(STORAGE_KEYS.ingredientes);
     return json ? JSON.parse(json) : [];
@@ -82,6 +93,7 @@ function exibirIngredientesNaTela() {
 window.addEventListener('DOMContentLoaded', () => {
     atualizarTodasImagens();
     exibirIngredientesNaTela();
+    atualizarPrecoNaTela();
     prepararModalAdmin();
 });
 
@@ -89,12 +101,13 @@ window.addEventListener('DOMContentLoaded', () => {
 function prepararModalAdmin() {
     const logo = document.querySelector('.logo');
     if (!logo) return;
-
     logo.style.cursor = 'pointer';
     logo.addEventListener('click', abrirModalAdmin);
 }
 
-// Cria o HTML do modal dinamicamente e adiciona ao body
+// Chaves das imagens usadas no modal
+const CHAVES_IMAGENS = ['pratoDia', 'salada', 'luis', 'barca'];
+
 function criarModalAdmin() {
     if (document.getElementById('modalAdminOverlay')) return;
 
@@ -109,12 +122,11 @@ function criarModalAdmin() {
 
             <h3>📷 Imagens</h3>
             <div class="admin-imagens">
-                ${['pratoDia','salada','luis','barca'].map(chave => `
+                ${CHAVES_IMAGENS.map(chave => `
                     <div class="admin-img-item">
                         <label>${chave === 'pratoDia' ? 'Prato do Dia' : chave.charAt(0).toUpperCase() + chave.slice(1)}</label>
                         <img id="preview_${chave}" src="${obterImagem(chave) || ''}" alt="">
                         <input type="file" accept="image/*" id="input_${chave}">
-                        <button class="btn-salvar-img" data-chave="${chave}">💾 Salvar Imagem</button>
                     </div>
                 `).join('')}
             </div>
@@ -122,57 +134,109 @@ function criarModalAdmin() {
             <h3>🥘 Ingredientes do Prato do Dia</h3>
             <div id="listaAdminIngredientes" class="admin-ingredientes"></div>
             <button id="btnAddIngrediente">+ Adicionar</button>
-            <button id="btnSalvarIngredientes">💾 Salvar Ingredientes</button>
-            <div id="msgAdmin" style="color:green; margin-top:10px;"></div>
+
+            <h3>💰 Preço do Prato do Dia</h3>
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:20px;">
+                <input type="text" id="inputPrecoPratoDia" value="${obterPrecoPratoDia()}" placeholder="ex: 20,00" style="width:120px;">
+            </div>
+
+            <button id="btnSalvarTudo" style="display:block; margin: 20px auto 0; padding: 10px 30px; font-size: 18px;">💾 Salvar Tudo</button>
+            <div id="msgAdmin" style="color:green; text-align:center; margin-top:10px;"></div>
         </div>
     `;
 
+    // Adiciona ao DOM
     document.body.appendChild(overlay);
 
-    // Configura eventos
-    overlay.querySelector('#fecharModal').addEventListener('click', fecharModalAdmin);
+    // Fechar modal
+    document.getElementById('fecharModal').addEventListener('click', fecharModalAdmin);
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) fecharModalAdmin();
     });
 
-    // Upload de imagens
-    overlay.querySelectorAll('.btn-salvar-img').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const chave = btn.dataset.chave;
-            const input = document.getElementById(`input_${chave}`);
-            const file = input.files[0];
-            if (!file) return alert('Selecione uma imagem.');
+    // Renderizar ingredientes
+    renderizarAdminIngredientes();
 
-            try {
-                const dataUrl = await fileToDataUrl(file, 400);
-                salvarImagem(chave, dataUrl);
-                document.getElementById(`preview_${chave}`).src = dataUrl;
-                // Atualiza a imagem correspondente no cardápio
-                carregarImagemNaTela(chave, `img${chave.charAt(0).toUpperCase() + chave.slice(1)}`);
-                input.value = '';
-            } catch (e) {
-                alert('Erro ao processar imagem: ' + e);
-            }
+    // Adicionar novo ingrediente (apenas adiciona à lista, não salva)
+    document.getElementById('btnAddIngrediente').addEventListener('click', () => {
+        const container = document.getElementById('listaAdminIngredientes');
+        const div = document.createElement('div');
+        div.className = 'ing-item';
+        div.innerHTML = `
+            <input type="text" value="" placeholder="Novo ingrediente">
+            <button class="btn-remover-ing">✕</button>
+        `;
+        container.appendChild(div);
+        // Adiciona evento de remover ao botão recém-criado
+        div.querySelector('.btn-remover-ing').addEventListener('click', () => div.remove());
+        // Atualiza o array temporário ao digitar (não salva no storage ainda)
+        const input = div.querySelector('input');
+        input.addEventListener('input', () => {
+            // Não é necessário fazer nada aqui, apenas manter consistência visual
         });
     });
 
-    // Ingredientes
-    renderizarAdminIngredientes();
+    // Botão "Salvar Tudo"
+    document.getElementById('btnSalvarTudo').addEventListener('click', async () => {
+        const msg = document.getElementById('msgAdmin');
+        msg.textContent = 'Salvando...';
+        msg.style.color = 'blue';
 
-    document.getElementById('btnAddIngrediente').addEventListener('click', () => {
-        const ingredientes = obterIngredientes();
-        ingredientes.push('');
-        salvarIngredientes(ingredientes);
-        renderizarAdminIngredientes();
-    });
+        try {
+            // 1. Processar imagens
+            for (const chave of CHAVES_IMAGENS) {
+                const input = document.getElementById(`input_${chave}`);
+                if (input.files && input.files[0]) {
+                    const file = input.files[0];
+                    const dataUrl = await fileToDataUrl(file, 400);
+                    salvarImagem(chave, dataUrl);
+                    // Atualiza preview
+                    document.getElementById(`preview_${chave}`).src = dataUrl;
+                    // Limpa o input
+                    input.value = '';
+                }
+                // Se não selecionou arquivo, mantém a imagem atual
+            }
 
-    document.getElementById('btnSalvarIngredientes').addEventListener('click', () => {
-        const inputs = document.querySelectorAll('.admin-ingredientes input');
-        const novos = Array.from(inputs).map(inp => inp.value.trim()).filter(v => v);
-        salvarIngredientes(novos);
-        exibirIngredientesNaTela(); // atualiza o cardápio principal
-        document.getElementById('msgAdmin').textContent = 'Ingredientes salvos!';
-        setTimeout(() => document.getElementById('msgAdmin').textContent = '', 3000);
+            // 2. Salvar ingredientes
+            const inputsIngredientes = document.querySelectorAll('#listaAdminIngredientes input');
+            const novosIngredientes = Array.from(inputsIngredientes)
+                .map(inp => inp.value.trim())
+                .filter(v => v !== '');
+            salvarIngredientes(novosIngredientes);
+
+            // 3. Salvar preço
+            const inputPreco = document.getElementById('inputPrecoPratoDia');
+            let novoPreco = inputPreco.value.replace(',', '.').trim();
+            if (novoPreco && !isNaN(parseFloat(novoPreco))) {
+                const formatado = parseFloat(novoPreco).toFixed(2).replace('.', ',');
+                salvarPrecoPratoDia(formatado);
+            } else if (novoPreco === '') {
+                // Mantém o preço atual, não faz nada
+            } else {
+                alert('Preço inválido. Use formato como 20,00');
+                msg.textContent = 'Erro: preço inválido. Corrija e tente novamente.';
+                msg.style.color = 'red';
+                return;
+            }
+
+            // 4. Atualizar a página principal
+            atualizarTodasImagens();
+            exibirIngredientesNaTela();
+            atualizarPrecoNaTela();
+
+            msg.textContent = 'Tudo salvo com sucesso!';
+            msg.style.color = 'green';
+            setTimeout(() => msg.textContent = '', 3000);
+
+            // Re-renderizar ingredientes no modal para refletir o estado salvo (limpa os inputs?)
+            // Apenas mantenha a lista como estava, mas atualize a referência interna
+            renderizarAdminIngredientes();
+        } catch (err) {
+            console.error(err);
+            msg.textContent = 'Erro ao salvar. Verifique o console.';
+            msg.style.color = 'red';
+        }
     });
 }
 
@@ -187,27 +251,38 @@ function renderizarAdminIngredientes() {
         </div>
     `).join('');
 
-    // Remover ingrediente
+    // Remover ingrediente (apenas da lista visual, não salva ainda)
     container.querySelectorAll('.btn-remover-ing').forEach(btn => {
         btn.addEventListener('click', () => {
             const idx = parseInt(btn.dataset.index);
             const ingrs = obterIngredientes();
             ingrs.splice(idx, 1);
-            salvarIngredientes(ingrs);
+            salvarIngredientes(ingrs); // Atualiza o storage imediatamente para manter consistência
             renderizarAdminIngredientes();
         });
     });
 
-    // Atualizar array enquanto digita (não é obrigatório, mas deixa o estado consistente)
+    // Atualizar ingrediente enquanto digita (já salva no storage em tempo real)
     container.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', () => {
             const ingrs = obterIngredientes();
             const idx = parseInt(input.dataset.index);
-            ingrs[idx] = input.value;
-            salvarIngredientes(ingrs); // salva a cada alteração (pode ser pesado, mas é simples)
+            if (!isNaN(idx)) {
+                ingrs[idx] = input.value;
+                salvarIngredientes(ingrs);
+            }
         });
     });
 }
+
+document.getElementById('tituloCardapio').addEventListener('click', () => {
+    // Se o modal admin estiver aberto, feche-o antes de imprimir
+    const modal = document.getElementById('modalAdminOverlay');
+    if (modal && modal.style.display === 'flex') {
+        modal.style.display = 'none';
+    }
+    window.print();
+});
 
 function abrirModalAdmin() {
     criarModalAdmin();

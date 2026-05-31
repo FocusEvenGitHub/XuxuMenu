@@ -11,14 +11,13 @@
     --creme: #f4e6db;
     --creme-claro: #fff8f0;
     --vermelho: #b31217;
-    --vinho: #8b1e24;
+    --vinho: #490408;
     --amarelo: #f6c400;
     --texto: #111;
     --linha: #cfc7bd;
     --chocolate: #4b2e2b;
     --verde: #6a8a6c;
 }
-
 html,
 body {
     width: 100%;
@@ -26,7 +25,7 @@ body {
 }
 
 body {
-    background: #171717;
+    background: var(--vinho);
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
@@ -49,7 +48,7 @@ body {
 .cardapio {
     width: 900px;
     height: 1600px;
-    background: var(--preto);
+    background: var(--vinho);
     padding: 22px;
     border-radius: 0;
     overflow: hidden;
@@ -58,7 +57,7 @@ body {
 
 .topo {
     position: relative;
-    height: 205px;
+    height: 175px;
     color: white;
 }
 
@@ -96,10 +95,10 @@ body {
 
 .logo {
     position: absolute;
-    top: -4px;
-    right: 16px;
-    width: 190px;
-    height: 190px;
+    top: 4px;
+    right: 32px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -127,12 +126,107 @@ body {
     padding: 18px;
 }
 
+/* NOVA SEÇÃO PRATO DIA - Dois pratos lado a lado */
 .prato-dia {
-    display: grid;
-    grid-template-columns: 57% 43%;
-    gap: 20px;
+    display: flex;
+    gap: 16px;
     height: 470px;
     margin-bottom: 16px;
+}
+
+.prato-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, var(--creme-claro), var(--creme));
+    border-radius: 12px;
+}
+
+.prato-titulo.tag-preta {
+    background: var(--preto);
+    color: white;
+    border-radius: 12px;
+    display: inline-block;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 20px;
+    width: auto;
+}
+
+.prato-foto {
+    width: 100%;
+    height: 220px;
+    border-radius: 12px;
+    border: 3px dashed #a89d93;
+    background: repeating-linear-gradient(45deg, #ddd, #ddd 10px, #e9e2db 10px, #e9e2db 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.prato-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.prato-preco {
+    height: 100px;
+}
+.prato-preco.preco-grande {
+    background: var(--preto);
+    color: white;
+    width: auto;
+    padding: 6px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 8px;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+}
+
+.prato-preco .rs {
+    color: var(--amarelo);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.prato-preco .valor {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.prato-descricao {
+    list-style: none;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 0 6px;
+    width: 100%;
+}
+
+.prato-descricao li::before {
+    content: "•";
+    color: var(--vermelho);
+    font-size: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.prato-opcoes {
+    font-size: 18pt;
+}
+
+.prato-opcoes strong {
+    color: var(--amarelo);
+    margin-left: 4px;
 }
 
 .tag-preta {
@@ -147,106 +241,6 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     line-height: 1;
-    width: -webkit-fill-available;
-}
-
-.tag-central {
-    text-align: center;
-    margin-bottom: 14px;
-}
-
-.placeholder {
-    width: 100%;
-    height: 355px;
-    border-radius: 16px;
-    border: 3px dashed #a89d93;
-    background: repeating-linear-gradient(45deg, #ddd, #ddd 12px, #e9e2db 12px, #e9e2db 24px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #5d5650;
-    font-size: 23px;
-    font-weight: 800;
-}
-.placeholder img {
-    border-radius: 16px;
-}
-
-.flex-title-dia, .flex-content-dia {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-prato-dia {
-    padding: 76px 6px 0;
-    position: relative;
-}
-
-.info-prato-dia h2 {
-    font-family: 'Bebas Neue', Impact, sans-serif;
-    font-size: 58px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
-
-.decoracao-linha {
-    height: 1px;
-    background: #9e958e;
-    width: 235px;
-    margin-bottom: 24px;
-    position: relative;
-}
-
-.decoracao-linha::after {
-    content: "◆";
-    position: absolute;
-    left: 50%;
-    top: -11px;
-    transform: translateX(-50%);
-    background: var(--creme-claro);
-    padding: 0 8px;
-    font-size: 18px;
-}
-
-.lista-prato li {
-    list-style: none;
-    font-size: 21px;
-    margin: -5px 0;
-    font-weight: 800;
-}
-
-.lista-prato li::before {
-    content: "•";
-    color: var(--vermelho);
-    font-size: 31px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-.preco-grande {
-    margin-right: 8px;
-    border-radius: 14px;
-    background: var(--preto);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Bebas Neue', Impact, sans-serif;
-}
-
-.preco-grande .rs {
-    color: var(--amarelo);
-    font-size: 40px;
-    line-height: .8;
-}
-
-.preco-grande .valor {
-    font-family: 'Bebas Neue', Impact, sans-serif;
-    font-size: 45px;
-    font-weight: 400;
 }
 
 .cards-centro {
@@ -342,11 +336,11 @@ body {
 }
 
 .lista-combo {
-    margin-top: auto;
+    margin: auto 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    font-size: 15px;
+    gap: 4px;
+    font-size: 18px;
     font-weight: 800;
 }
 
@@ -367,9 +361,11 @@ body {
     grid-template-columns: 40% 60%;
     gap: 16px;
 }
+
 .monte-prato {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 8px;
 }
 
 .monte-prato .tag-preta {
@@ -377,7 +373,6 @@ body {
     padding-inline: 22px;
     line-height: 1;
     height: 50px;
-    line-height: 1;
     width: auto;
 }
 
@@ -412,6 +407,8 @@ body {
 .lista-adicionais {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(5, auto);
+    grid-auto-flow: column;
     gap: 8px 0;
     font-size: 14px;
     font-weight: 800;
@@ -444,39 +441,6 @@ body {
     color: var(--vermelho);
     font-weight: 900;
     white-space: nowrap;
-}
-
-@media (max-width: 940px) {
-    body {
-        padding: 0;
-        background: var(--preto);
-    }
-
-    .cardapio {
-        transform-origin: top center;
-        width: 900px;
-        height: 1600px;
-        box-shadow: none;
-    }
-}
-
-@media print {
-    @page {
-        size: 900px 1600px;
-        margin: 0;
-    }
-
-    body {
-        padding: 0;
-        background: white;
-    }
-
-    .cardapio {
-        width: 900px;
-        height: 1600px;
-        border-radius: 0;
-        box-shadow: none;
-    }
 }
 
 /* ================== MODAL ADMIN ================== */
@@ -582,3 +546,47 @@ button:hover {
     padding: 4px 10px;
 }
 
+#inputPrecoPratoDia {
+    padding: 8px;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+@media (max-width: 940px) {
+    body {
+        padding: 0;
+        background: var(--preto);
+    }
+
+    .cardapio {
+        transform-origin: top center;
+        width: 900px;
+        height: 1600px;
+        box-shadow: none;
+    }
+}
+
+@media print {
+    @page {
+        size: 900px 1600px;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        background: white;
+    }
+
+    .cardapio {
+        width: 900px;
+        height: 1600px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+#tituloCardapio {
+    cursor: pointer;
+    user-select: none;
+}
