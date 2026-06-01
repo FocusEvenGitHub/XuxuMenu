@@ -17,18 +17,19 @@
         </div>
     </header>
 
-    <section class="painel prato-dia">
-        <!-- Prato do Dia (dinâmico - editável pelo admin) -->
-        <div class="prato-item">
-            <div class="prato-preco preco-grande">
-                <h2 class="prato-titulo tag-preta">Prato do Dia</h2>
-                <span class="rs">R$</span>
-                <span class="valor" id="precoPratoDia">20,00</span>
+    <section class="cards-centro cards-6">
+
+        <article class="card-produto card-destaque">
+            <div class="cabecalho-card">
+                <h3>Prato do Dia</h3>
+                <p class="preco-destaque"><span class="rs">R$</span><strong id="precoPratoDia">20,00</strong></p>
             </div>
-            <div class="prato-foto">
+
+            <div class="foto-card">
                 <img id="imgPratoDia" src="img/prato-dia.jpg" alt="Prato do Dia">
             </div>
-            <ul class="prato-descricao lista-prato" id="listaPratoDia">
+
+            <ul class="lista-prato" id="listaPratoDia">
                 <li>Arroz</li>
                 <li>Feijão</li>
                 <li>Macarrão</li>
@@ -36,31 +37,46 @@
                 <li>Batata Frita</li>
                 <li>Vinagrete</li>
             </ul>
-        </div>
+        </article>
 
-        <!-- Parmegiana (fixo) -->
-        <div class="prato-item">
-            <div class="prato-preco preco-grande">
-                <h2 class="prato-titulo tag-preta">Parmegiana</h2>
-                <div class="prato-opcoes">
-                    <p>Frango <strong>R$25</strong></p>
-                    <p>Carne <strong>R$28</strong></p>
-                    <p>Tilápia <strong>R$30</strong></p>
-                </div>
+        <article class="card-produto">
+            <div class="cabecalho-card">
+                <h3>Picadinho</h3>
+                <p><strong>R$28,00</strong></p>
             </div>
-            <div class="prato-foto">
+
+            <div class="foto-card">
+                <img src="img/picadinho.png" alt="Picadinho Alegre">
+            </div>
+
+            <div class="lista-combo">
+                <div class="linha-item">Macarrão Alho & Óleo <span></span></div>
+                <div class="linha-item">Tiras de Filé <span></span></div>
+                <div class="linha-item">Linguiça <span></span></div>
+                <div class="linha-item">Barbecue <span></span></div>
+            </div>
+        </article>
+
+        <article class="card-produto">
+            <div class="cabecalho-card">
+                <h3>Parmegiana</h3>
+                <p>Frango <strong>R$25</strong></p>
+                <p>Carne <strong>R$28</strong></p>
+                <p>Tilápia <strong>R$30</strong></p>
+            </div>
+
+            <div class="foto-card">
                 <img src="img/parmegiana.png" alt="Parmegiana">
             </div>
-            <ul class="prato-descricao lista-prato">
-                <li>Arroz</li>
-                <li>Macarrão</li>
-                <li>Cheiro Verde</li>
-                <li>Molho de Tomate</li>
-            </ul>
-        </div>
-    </section>
 
-    <section class="cards-centro">
+            <div class="lista-combo">
+                <div class="linha-item">Arroz <span></span></div>
+                <div class="linha-item">Macarrão <span></span></div>
+                <div class="linha-item">Manjericão <span></span></div>
+                <div class="linha-item">Molho de Tomate <span></span></div>
+            </div>
+        </article>
+
         <article class="card-produto">
             <div class="cabecalho-card">
                 <h3>Salada</h3>
@@ -122,6 +138,7 @@
                 <div class="linha-item">Anel de Cebola <span></span></div>
             </div>
         </article>
+
     </section>
 
     <section class="painel rodape">
@@ -131,25 +148,21 @@
 
         <div class="adicionais">
             <div class="lista-adicionais">
-                <!-- CARNES -->
                 <div class="adicional"><span>Filé de Tilápia</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
                 <div class="adicional"><span>Filé de Frango</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
                 <div class="adicional"><span>Filé de Carne</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
                 <div class="adicional"><span>Linguiça Fina</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
 
-                <!-- ACOMPANHAMENTOS -->
                 <div class="adicional"><span>Farofa</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
                 <div class="adicional"><span>Cebola</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
                 <div class="adicional"><span>Vinagrete</span><span class="linha"></span><span class="preco">R$ 5,00</span></div>
                 <div class="adicional"><span>Salada</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
                 <div class="adicional"><span>Molhos</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>
 
-                <!-- BASES -->
                 <div class="adicional"><span>Arroz Branco</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
                 <div class="adicional"><span>Feijão Carioca</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
                 <div class="adicional"><span>Macarrão</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
 
-                <!-- FRITAS -->
                 <div class="adicional"><span>Fritas Individual</span><span class="linha"></span><span class="preco">R$ 8,00</span></div>
                 <div class="adicional"><span>Fritas Cone</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
                 <div class="adicional"><span>Ovo Frito</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>

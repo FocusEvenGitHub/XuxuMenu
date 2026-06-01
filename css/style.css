@@ -1,5 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+.cards-centro.cards-6 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    height: 1130px;
+    margin-bottom: 16px;
+}
 
+.card-destaque .cabecalho-card p {
+    font-size: 19px;
+}
+
+.preco-destaque {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.preco-destaque .rs {
+    color: var(--amarelo);
+    font-size: 20px;
+}
+
+.preco-destaque strong {
+    color: var(--amarelo);
+    font-size: 24px;
+}
+
+.lista-prato {
+    list-style: none;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 0 6px;
+    width: 100%;
+}
+
+.lista-prato li::before {
+    content: "•";
+    color: var(--vermelho);
+    font-size: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
 * {
     margin: 0;
     padding: 0;
@@ -288,7 +330,6 @@ body {
 
 .cabecalho-card strong {
     color: var(--amarelo);
-    margin-left: 6px;
 }
 
 .foto-card {
@@ -410,8 +451,10 @@ body {
     grid-template-rows: repeat(5, auto);
     grid-auto-flow: column;
     gap: 8px 0;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 800;
+    padding-left: 0;
+    margin-right: -60px;
 }
 
 .adicional {
