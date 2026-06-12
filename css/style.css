@@ -309,7 +309,6 @@ body {
     border-radius: 12px;
     padding: 10px;
     text-align: center;
-    margin-bottom: auto;
 }
 
 .cabecalho-card h3 {
@@ -356,7 +355,7 @@ body {
     font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: auto;
     letter-spacing: .3px;
 }
 
