@@ -1,64 +1,101 @@
 # Cardápio Digital – Cozinha da Xuxu
 
-Cardápio digital responsivo e editável, com painel de administração secreto acessível ao clicar na logo.  
-As alterações (imagens dos pratos e ingredientes do prato do dia) são salvas no navegador e persistem entre acessos.
+Cardápio digital responsivo e totalmente editável, com painel de administração secreto acessível ao clicar na logo.  
+As alterações são salvas no navegador e persistem entre acessos.
 
-## 📸 Demonstração
-
-- Visual moderno com fontes estilizadas, preços e layout em grid.
-- Imagens e lista de ingredientes atualizáveis sem recarregar a página.
-- Painel admin oculto – apenas para quem conhece o segredo (clique na logo).
+---
 
 ## 🚀 Funcionalidades
 
-- Troca de imagens dos pratos (Prato do Dia, Salada, Luís, Barça).
-- Edição dos ingredientes do Prato do Dia (adicionar, remover, editar).
-- Armazenamento via `localStorage` – nada é perdido ao fechar o navegador.
-- Design responsivo e pronto para impressão.
-- Totalmente offline – não requer servidor backend.
+- **Painel admin com 7 abas:** 6 produtos + Adicionais ("Monte seu Prato")
+- **Edição completa:** nome, preço, ingredientes, itens, variantes (Frango/Carne/Tilápia) de todos os produtos
+- **Upload de imagens** para todos os 6 pratos (redimensionamento automático via Canvas)
+- **Listas dinâmicas:** adicione ou remova ingredientes, itens e variantes livremente
+- **Seção "Monte seu Prato":** lista dinâmica de itens adicionais com nome e preço
+- **Design responsivo** e pronto para impressão (900×1600 px)
+- **Persistência via `localStorage`** – nada se perde ao fechar o navegador
+- **Launcher de 1 clique** (`iniciar.bat`) – sobe servidor local oculto e abre o navegador
+- **Valores padrão embutidos** – ao abrir num PC novo, o cardápio já aparece completo
+
+---
 
 ## 📁 Estrutura de arquivos
-````
-cardapio/
-├── index.html ← Cardápio + modal admin oculto
+
+```
+XuxuMenu/
+├── iniciar.bat            ← Duplo clique para iniciar!
+├── iniciar.ps1            ← Servidor HTTP (automático)
+├── parar.bat              ← Duplo clique para parar o servidor
+├── index.html             ← Cardápio + estrutura do admin
 ├── css/
-│ └── style.css ← Estilos do cardápio e do modal
+│   ├── base.css           ← Reset, variáveis, fonte
+│   ├── cardapio.css       ← Estilos do cardápio
+│   ├── admin.css          ← Estilos do modal admin
+│   └── print.css          ← Configuração de impressão
+├── js/
+│   ├── storage.js         ← Modelo de dados + localStorage
+│   ├── ui.js              ← Renderização do cardápio
+│   ├── admin.js           ← Modal admin com 7 abas
+│   └── app.js             ← Inicialização
 ├── img/
-│ ├── logo.png ← Clique nela para abrir o admin
-│ └── ... ← Imagens padrão (fallbacks)
-└── js/
-└── cardapio.js ← Lógica de armazenamento e controle do modal
-````
+│   ├── logo.png           ← Clique nela para abrir o admin
+│   └── ...                ← Imagens padrão dos pratos
+└── readme.md
+```
+
+---
 
 ## ⚙️ Como usar
 
-### 1. Iniciar o projeto
+### 1. Iniciar (mais fácil)
 
-**⚠️ Importante:** O `localStorage` não funciona de forma confiável ao abrir os arquivos diretamente (`file://`).  
-Execute um servidor local simples:
+Dê **duplo clique** no arquivo `iniciar.bat`:
+- Uma janela preta pisca rapidamente e some
+- O navegador abre automaticamente com o cardápio
+- O servidor fica rodando em segundo plano
 
-- **VS Code**: instale a extensão “Live Server” e clique com o botão direito em `index.html` → “Open with Live Server”.
-- **Node.js**: `npx http-server ./cardapio -p 8080`
-- **Python**: `python -m http.server 8000`
+Para desligar, dê duplo clique no `parar.bat`.
 
-Acesse `http://localhost:8080` (ou a porta que escolher).
+### 2. Iniciar (alternativas manuais)
 
-### 2. Usar o cardápio
+Se preferir iniciar manualmente, use um servidor local simples:
 
-- O cardápio abre normalmente com as imagens e ingredientes salvos (ou os padrão).
-- **Para administrar**: clique na imagem da logo (canto superior direito).
-- Um modal será exibido com:
-    - Upload de novas imagens (cada botão “Salvar Imagem” substitui a foto atual).
-    - Lista de ingredientes do prato do dia – adicione, remova ou edite os itens e clique em “Salvar Ingredientes”.
-- Ao fechar o modal (X ou clique fora), o cardápio já reflete as mudanças.
+- **VS Code:** extensão Live Server → botão direito no `index.html` → "Open with Live Server"
+- **Node.js:** `npx http-server . -p 8080`
+- **Python:** `python -m http.server 8000`
 
-Os dados ficam salvos no seu navegador. Para restaurar as imagens e ingredientes originais, limpe o `localStorage` do domínio.
+Acesse `http://localhost:8080` (ou a porta escolhida).
+
+> ⚠️ O `localStorage` não funciona de forma confiável ao abrir pelo `file://`.
+
+### 3. Usar o cardápio
+
+- O cardápio abre normalmente com os valores padrão ou os últimos salvos.
+- **Para administrar:** clique na **logo** (canto superior direito).
+- O modal admin será exibido com **7 abas** no topo:
+
+```
+🥘 Prato Dia │ 🥩 Picadinho │ 🧀 Parmegiana │ 🥗 Salada │ 🍖 Luís │ 🍛 Barça │ ➕ Adicionais
+```
+
+Cada aba de produto permite editar:
+- **Imagem** – upload de nova foto com preview
+- **Nome** do prato
+- **Preço** (ou variantes como Frango/Carne/Tilápia com preços individuais)
+- **Ingredientes / Itens** – lista dinâmica (adicione ou remova)
+
+A aba **"Adicionais"** permite editar o título da seção e a lista completa de itens do "Monte seu Prato" (nome + preço).
+
+Após as alterações, clique em **"💾 Salvar Tudo"** – o cardápio é atualizado na hora.
+
+---
 
 ## 🔧 Tecnologias
 
 - HTML5, CSS3 (custom properties, grid, flexbox)
-- JavaScript (vanilla, async/await, FileReader, Canvas)
+- JavaScript vanilla (ES6 modules, async/await, FileReader, Canvas)
 - `localStorage` para persistência
+- PowerShell (`System.Net.HttpListener`) para servidor local
 
 ---
 

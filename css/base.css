@@ -1,0 +1,37 @@
+/* ===== base.css ===== */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --preto: #050505;
+    --creme: #f4e6db;
+    --creme-claro: #fff8f0;
+    --vermelho: #b31217;
+    --vinho: #490408;
+    --amarelo: #f6c400;
+    --texto: #111;
+    --linha: #cfc7bd;
+    --chocolate: #4b2e2b;
+    --verde: #6a8a6c;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: var(--vinho);
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    color: var(--texto);
+}

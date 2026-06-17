@@ -1,0 +1,239 @@
+/* ===== admin.css ===== */
+
+/* ── Modal overlay ─────────────────────── */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.modal-admin {
+    background: var(--creme);
+    color: var(--texto);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--preto);
+}
+
+.modal-admin h2 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+.modal-admin h3 {
+    margin: 20px 0 10px;
+    font-size: 20px;
+}
+
+/* ── Tabs ──────────────────────────────── */
+.admin-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--preto);
+    padding-bottom: 10px;
+}
+
+.admin-tab {
+    padding: 8px 14px;
+    background: var(--creme);
+    border: 2px solid var(--preto);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: var(--preto);
+}
+
+.admin-tab:hover {
+    background: var(--creme-claro);
+}
+
+.admin-tab.active {
+    background: var(--preto);
+    color: white;
+    border-color: var(--preto);
+}
+
+/* ── Content panels ────────────────────── */
+.admin-content {
+    display: none;
+}
+
+.admin-content:first-of-type {
+    display: block; /* shown by default, overridden by JS */
+}
+
+/* ── Image upload ──────────────────────── */
+.admin-img-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.admin-img-item label {
+    font-weight: 800;
+    min-width: 60px;
+}
+
+.admin-img-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px dashed #aaa;
+    border-radius: 10px;
+    background: #eee;
+}
+
+/* ── Form fields ───────────────────────── */
+.admin-field {
+    margin-bottom: 18px;
+}
+
+.admin-field label {
+    display: block;
+    font-weight: 800;
+    margin-bottom: 4px;
+    font-size: 15px;
+}
+
+.admin-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 10px;
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: var(--vermelho);
+}
+
+/* ── Dynamic lists ─────────────────────── */
+.dynamic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-item input {
+    flex: 1;
+    max-width: 350px;
+    padding: 6px 8px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.list-item input:focus {
+    outline: none;
+    border-color: var(--vermelho);
+}
+
+.variant-item {
+    gap: 6px;
+}
+
+.variant-item .variant-label {
+    flex: 0 1 160px;
+}
+
+.variant-item .variant-price {
+    flex: 0 1 100px;
+}
+
+.footer-item {
+    gap: 6px;
+}
+
+.footer-item .footer-name {
+    flex: 0 1 200px;
+}
+
+.footer-item .footer-price {
+    flex: 0 1 100px;
+}
+
+/* ── Buttons ───────────────────────────── */
+button {
+    background: var(--vermelho);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Montserrat', Arial, sans-serif;
+    transition: background 0.15s;
+}
+
+button:hover {
+    background: var(--vinho);
+}
+
+.btn-remove-list-item {
+    background: #555;
+    padding: 4px 10px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.btn-remove-list-item:hover {
+    background: #333;
+}
+
+.btn-add-list-item {
+    background: var(--verde);
+    font-size: 13px;
+    padding: 6px 16px;
+}
+
+.btn-add-list-item:hover {
+    background: #4d7a4f;
+}
+
+#inputPrecoPratoDia {
+    padding: 8px;
+    border: 2px solid var(--vermelho);
+    border-radius: 8px;
+    font-size: 16px;
+}

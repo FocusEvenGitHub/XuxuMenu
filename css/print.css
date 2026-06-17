@@ -1,0 +1,25 @@
+/* ===== print.css ===== */
+
+@media print {
+    @page {
+        size: 900px 1600px;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        background: white;
+    }
+
+    .cardapio {
+        width: 900px;
+        height: 1600px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* hide the admin modal when printing */
+    .modal-overlay {
+        display: none !important;
+    }
+}

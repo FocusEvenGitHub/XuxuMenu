@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cardápio - Cozinha da Xuxu</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Card&aacute;pio - Cozinha da Xuxu</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/cardapio.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
 <main class="cardapio">
     <header class="topo">
-        <h1 class="titulo-principal" id="tituloCardapio">Cardápio</h1>
+        <h1 class="titulo-principal" id="tituloCardapio">Card&aacute;pio</h1>
         <div class="logo">
             <div>
                 <img src="img/logo.png" alt="Logo" width="200" height="200">
@@ -19,159 +22,96 @@
 
     <section class="cards-centro cards-6">
 
-        <article class="card-produto card-destaque">
+        <!-- ============ PRATO DO DIA ============ -->
+        <article class="card-produto card-destaque" data-id="pratoDia">
             <div class="cabecalho-card">
-                <h3>Prato do Dia</h3>
-                <p class="preco-destaque"><span class="rs">R$</span><strong id="precoPratoDia">20,00</strong></p>
+                <h3 data-field="name"></h3>
+                <p class="preco-destaque">
+                    <span class="rs">R$</span>
+                    <strong data-field="price"></strong>
+                </p>
             </div>
-
             <div class="foto-card">
-                <img id="imgPratoDia" src="img/prato-dia.jpg" alt="Prato do Dia">
+                <img data-img="pratoDia" src="img/prato-dia.jpg" alt="Prato do Dia">
             </div>
-
-            <ul class="lista-prato" id="listaPratoDia">
-                <li>Arroz</li>
-                <li>Feijão</li>
-                <li>Macarrão</li>
-                <li>Farofa</li>
-                <li>Batata Frita</li>
-                <li>Vinagrete</li>
-            </ul>
+            <ul class="lista-prato" data-field="ingredients"></ul>
         </article>
 
-        <article class="card-produto">
+        <!-- ============ PICADINHO ============ -->
+        <article class="card-produto" data-id="picadinho">
             <div class="cabecalho-card">
-                <h3>Picadinho</h3>
-                <p>da Alegria</p>
-                <p><strong>R$28,00</strong></p>
+                <h3 data-field="name"></h3>
+                <p data-field="subtitle"></p>
+                <p><strong data-field="price"></strong></p>
             </div>
-
             <div class="foto-card">
-                <img src="img/picadinho.png" alt="Picadinho Alegre">
+                <img data-img="picadinho" src="img/picadinho.png" alt="Picadinho">
             </div>
-
-            <div class="lista-combo">
-                <div class="linha-item">Macarrão Acebolado <span></span></div>
-                <div class="linha-item">Linguiça de frango <span></span></div>
-                <div class="linha-item">Tiras de filé <span></span></div>
-                <div class="linha-item">Barbecue <span></span></div>
-            </div>
+            <div class="lista-combo" data-field="items"></div>
         </article>
 
-        <article class="card-produto">
+        <!-- ============ PARMEGIANA ============ -->
+        <article class="card-produto" data-id="parmegiana">
             <div class="cabecalho-card">
-                <h3>Parmegiana</h3>
-                <p>Frango <strong>R$25</strong></p>
-                <p>Carne <strong>R$28</strong></p>
+                <h3 data-field="name"></h3>
+                <div data-field="variants"></div>
             </div>
-
             <div class="foto-card">
-                <img src="img/parmegiana.png" alt="Parmegiana">
+                <img data-img="parmegiana" src="img/parmegiana.png" alt="Parmegiana">
             </div>
-
-            <div class="lista-combo">
-                <div class="linha-item">Macarrão alho óleo <span></span></div>
-                <div class="linha-item">Molho especial <span></span></div>
-                <div class="linha-item">Manjericão <span></span></div>
-                <div class="linha-item">Mussarela <span></span></div>
-            </div>
+            <div class="lista-combo" data-field="items"></div>
         </article>
 
-        <article class="card-produto">
+        <!-- ============ SALADA ============ -->
+        <article class="card-produto" data-id="salada">
             <div class="cabecalho-card">
-                <h3>Salada</h3>
-                <p>Frango <strong>R$20</strong></p>
-                <p>Carne <strong>R$23</strong></p>
-                <p>Tilápia <strong>R$26</strong></p>
+                <h3 data-field="name"></h3>
+                <div data-field="variants"></div>
             </div>
-
             <div class="foto-card">
-                <img id="imgSalada" src="img/salada.png" alt="Salada">
+                <img data-img="salada" src="img/salada.png" alt="Salada">
             </div>
-
-            <div class="ingredientes-titulo">Ingredientes da Salada</div>
-            <div class="ingredientes-salada">
-                <div>Milho</div>
-                <div>Alface</div>
-                <div>Rúcula</div>
-                <div>Tomate</div>
-                <div>Beterraba</div>
-                <div>Cenoura</div>
-            </div>
+            <div class="ingredientes-titulo" data-field="ingredientsTitle"></div>
+            <div class="ingredientes-salada" data-field="ingredients"></div>
         </article>
 
-        <article class="card-produto">
+        <!-- ============ LUÍS ============ -->
+        <article class="card-produto" data-id="luis">
             <div class="cabecalho-card">
-                <h3>Luís</h3>
-                <p>Frango <strong>R$23</strong></p>
-                <p>Carne <strong>R$26</strong></p>
-                <p>Tilápia <strong>R$28</strong></p>
+                <h3 data-field="name"></h3>
+                <div data-field="variants"></div>
             </div>
-
             <div class="foto-card">
-                <img id="imgLuis" src="img/luis.png" alt="Luis">
+                <img data-img="luis" src="img/luis.png" alt="Lu&iacute;s">
             </div>
-
-            <div class="lista-combo">
-                <div class="linha-item">Arroz <span></span></div>
-                <div class="linha-item">Feijão <span></span></div>
-                <div class="linha-item">Salada <span></span></div>
-                <div class="linha-item">Molho <span></span></div>
-            </div>
+            <div class="lista-combo" data-field="items"></div>
         </article>
 
-        <article class="card-produto">
+        <!-- ============ BARÇA ============ -->
+        <article class="card-produto" data-id="barca">
             <div class="cabecalho-card">
-                <h3>Barça</h3>
-                <p>Frango <strong>R$30</strong></p>
-                <p>Carne <strong>R$30</strong></p>
-                <p>Tilápia <strong>R$30</strong></p>
+                <h3 data-field="name"></h3>
+                <div data-field="variants"></div>
             </div>
-
             <div class="foto-card">
-                <img id="imgBarca" src="img/barca.png" alt="Barça">
+                <img data-img="barca" src="img/barca.png" alt="Bar&ccedil;a">
             </div>
-
-            <div class="lista-combo">
-                <div class="linha-item">Arroz <span></span></div>
-                <div class="linha-item">Salada <span></span></div>
-                <div class="linha-item">Fritas <span></span></div>
-                <div class="linha-item">Molho <span></span></div>
-                <div class="linha-item">Anel de Cebola <span></span></div>
-            </div>
+            <div class="lista-combo" data-field="items"></div>
         </article>
 
     </section>
 
+    <!-- ============ RODAPÉ (MONTE SEU PRATO) ============ -->
     <section class="painel rodape">
         <div class="monte-prato">
-            <span class="tag-preta">Monte seu Prato</span>
+            <span class="tag-preta" data-field="footer-title"></span>
         </div>
-
         <div class="adicionais">
-            <div class="lista-adicionais">
-                <div class="adicional"><span>Filé de Tilápia</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
-                <div class="adicional"><span>Filé de Frango</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
-                <div class="adicional"><span>Filé de Carne</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
-                <div class="adicional"><span>Linguiça Fina</span><span class="linha"></span><span class="preco">R$ 13,00</span></div>
-
-                <div class="adicional"><span>Farofa</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
-                <div class="adicional"><span>Cebola</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
-                <div class="adicional"><span>Vinagrete</span><span class="linha"></span><span class="preco">R$ 5,00</span></div>
-                <div class="adicional"><span>Salada</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
-                <div class="adicional"><span>Molhos</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>
-
-                <div class="adicional"><span>Arroz Branco</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
-                <div class="adicional"><span>Feijão Carioca</span><span class="linha"></span><span class="preco">R$ 4,00</span></div>
-                <div class="adicional"><span>Macarrão</span><span class="linha"></span><span class="preco">R$ 7,00</span></div>
-
-                <div class="adicional"><span>Fritas Individual</span><span class="linha"></span><span class="preco">R$ 8,00</span></div>
-                <div class="adicional"><span>Fritas Cone</span><span class="linha"></span><span class="preco">R$ 15,00</span></div>
-                <div class="adicional"><span>Ovo Frito</span><span class="linha"></span><span class="preco">R$ 2,00</span></div>
-            </div>
+            <div class="lista-adicionais" data-field="footer-items"></div>
         </div>
     </section>
+
 </main>
-<script src="js/cardapio.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
