@@ -26,10 +26,18 @@
         <article class="card-produto card-destaque" data-id="pratoDia">
             <div class="cabecalho-card">
                 <h3 data-field="name"></h3>
-                <p class="preco-destaque">
-                    <span class="rs">R$</span>
-                    <strong data-field="price"></strong>
-                </p>
+                <div class="precos-destaque">
+                    <p class="preco-destaque">
+                        <span class="preco-rotulo">Adulto</span>
+                        <span class="rs">R$</span>
+                        <strong data-field="price"></strong>
+                    </p>
+                    <p class="preco-destaque" data-linha="kids">
+                        <span class="preco-rotulo">Kids</span>
+                        <span class="rs">R$</span>
+                        <strong data-field="priceKids"></strong>
+                    </p>
+                </div>
             </div>
             <div class="foto-card">
                 <img data-img="pratoDia" src="img/prato-dia.jpg" alt="Prato do Dia">

@@ -41,9 +41,16 @@ function renderProduct(product) {
 }
 
 function renderPratoDia(product, article) {
-  // Price
+  // Prices (Adulto / Kids)
   const priceEl = article.querySelector('[data-field="price"]');
   if (priceEl) priceEl.textContent = product.price;
+
+  const kidsEl = article.querySelector('[data-field="priceKids"]');
+  if (kidsEl) kidsEl.textContent = product.priceKids || '';
+
+  // Hides the Kids line when no price is set
+  const kidsLine = article.querySelector('[data-linha="kids"]');
+  if (kidsLine) kidsLine.style.display = product.priceKids ? '' : 'none';
 
   // Ingredients list
   const listEl = article.querySelector('[data-field="ingredients"]');

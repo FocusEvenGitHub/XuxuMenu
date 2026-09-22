@@ -147,9 +147,14 @@ function renderProductTab(id, product) {
     case 'pratoDia':
       html += `
         <div class="admin-field">
-          <label>Pre&ccedil;o</label>
+          <label>Pre&ccedil;o Adulto</label>
           <input type="text" class="admin-input" data-prod="${id}" data-field="price"
                  value="${escAttr(product.price)}">
+        </div>
+        <div class="admin-field">
+          <label>Pre&ccedil;o Kids</label>
+          <input type="text" class="admin-input" data-prod="${id}" data-field="priceKids"
+                 value="${escAttr(product.priceKids || '')}">
         </div>
         <div class="admin-field">
           <label>Ingredientes</label>
@@ -391,6 +396,9 @@ async function salvarTudo() {
 
       const priceInp = document.querySelector(`[data-prod="${id}"][data-field="price"]`);
       if (priceInp) product.price = priceInp.value;
+
+      const priceKidsInp = document.querySelector(`[data-prod="${id}"][data-field="priceKids"]`);
+      if (priceKidsInp) product.priceKids = priceKidsInp.value.trim();
 
       const subInp = document.querySelector(`[data-prod="${id}"][data-field="subtitle"]`);
       if (subInp) product.subtitle = subInp.value;

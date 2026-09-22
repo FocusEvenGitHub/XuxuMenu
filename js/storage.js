@@ -10,6 +10,7 @@ export const DEFAULT_DATA = {
       id: 'pratoDia',
       name: 'Prato do Dia',
       price: '20,00',
+      priceKids: '15,00',
       ingredients: ['Arroz', 'Feijão', 'Macarrão', 'Farofa', 'Batata Frita', 'Vinagrete']
     },
     {
@@ -90,12 +91,21 @@ export function getData() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     try {
-      return JSON.parse(saved);
+      return migrate(JSON.parse(saved));
     } catch (e) {
       return deepClone(DEFAULT_DATA);
     }
   }
   return deepClone(DEFAULT_DATA);
+}
+
+// Fills in fields added after the data was first saved
+function migrate(data) {
+  const pratoDia = data.products?.find(p => p.id === 'pratoDia');
+  if (pratoDia && pratoDia.priceKids === undefined) {
+    pratoDia.priceKids = DEFAULT_DATA.products.find(p => p.id === 'pratoDia').priceKids;
+  }
+  return data;
 }
 
 export function setData(data) {
