@@ -61,10 +61,10 @@ Para desligar, dê duplo clique no `parar.bat`.
 Se preferir iniciar manualmente, use um servidor local simples:
 
 - **VS Code:** extensão Live Server → botão direito no `index.html` → "Open with Live Server"
-- **Node.js:** `npx http-server . -p 8080`
+- **Node.js:** `npx http-server . -p 8090`
 - **Python:** `python -m http.server 8000`
 
-Acesse `http://localhost:8080` (ou a porta escolhida).
+Acesse `http://localhost:8090` (ou a porta escolhida).
 
 > ⚠️ O `localStorage` não funciona de forma confiável ao abrir pelo `file://`.
 

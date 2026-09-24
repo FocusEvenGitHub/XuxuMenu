@@ -1,6 +1,6 @@
 # iniciar.ps1 — Servidor HTTP para o XuxuMenu
 
-$port = 8080
+$port = 8090
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 # Salva o PID para poder parar depois
