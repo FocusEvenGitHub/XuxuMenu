@@ -147,13 +147,11 @@
     display: flex;
     justify-content: center;
     align-items: baseline;
-    gap: 6px;
     flex-wrap: wrap;
 }
 
 .preco-rotulo {
     color: #fff;
-    font-size: 17px;
     font-weight: 800;
     margin-right: 5px;
 }
