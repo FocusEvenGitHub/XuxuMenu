@@ -3,6 +3,7 @@
 
 import { getData, setData, getImage, saveImage, fileToDataUrl } from './storage.js';
 import { renderCardapio } from './ui.js';
+import { abrirCompartilharCardapio } from './share.js';
 
 const PRODUCT_IDS = ['pratoDia', 'picadinho', 'parmegiana', 'salada', 'luis', 'barca'];
 
@@ -68,6 +69,10 @@ function criarModalAdmin() {
       <div style="text-align:center; margin-top:24px;">
         <button id="btnSalvarTudo" style="padding:12px 40px; font-size:18px;">💾 Salvar Tudo</button>
       </div>
+      <div class="admin-compartilhar">
+        <button id="btnCompartilharCardapio">📥 Baixar / Compartilhar Card&aacute;pio</button>
+        <small>Gera uma imagem do card&aacute;pio salvo (900×1600) para baixar no computador ou enviar ao celular.</small>
+      </div>
       <div id="msgAdmin" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
     </div>
   `;
@@ -88,6 +93,12 @@ function criarModalAdmin() {
 
   // Save button
   document.getElementById('btnSalvarTudo').addEventListener('click', salvarTudo);
+
+  // Baixar / Compartilhar: fecha o admin e gera a imagem do cardápio
+  document.getElementById('btnCompartilharCardapio').addEventListener('click', () => {
+    fecharModalAdmin();
+    abrirCompartilharCardapio();
+  });
 
   // Start on first tab
   switchTab('pratoDia');
