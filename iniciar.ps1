@@ -26,7 +26,7 @@ try {
 # Salva o PID para poder parar depois (so depois de o servidor subir de fato)
 $pid | Out-File -FilePath "$env:TEMP\xuxumenu.pid" -Force
 
-# Abre o navegador
+# Abre o navegador (so aqui: o iniciar.bat nao abre mais, para nao abrir duas vezes)
 Start-Process "http://localhost:$port"
 
 Write-Host "XuxuMenu rodando em http://localhost:$port"
@@ -113,12 +113,33 @@ function Test-IpPrivado([string]$ip) {
     return $false
 }
 
-# IP do PC na rede local (prefere a placa com gateway, ou seja, Wi-Fi/cabo de verdade)
+# IP do PC na rede local.
+# 1o: o IP da placa usada pela rota padrao (a mesma que sai para o roteador/Wi-Fi).
+#     Um socket UDP "conectado" so consulta a tabela de rotas: nenhum pacote e enviado.
+# 2o: se nao houver rota padrao, escolhe pela lista de placas, ignorando as virtuais.
 function Get-IpRede {
+    try {
+        $sock = New-Object System.Net.Sockets.Socket(
+            [System.Net.Sockets.AddressFamily]::InterNetwork,
+            [System.Net.Sockets.SocketType]::Dgram,
+            [System.Net.Sockets.ProtocolType]::Udp)
+        $sock.Connect('8.8.8.8', 53)
+        $ip = $sock.LocalEndPoint.Address.ToString()
+        $sock.Close()
+        if ($ip -and -not $ip.StartsWith('127.') -and -not $ip.StartsWith('169.254.') -and $ip -ne '0.0.0.0') {
+            return $ip
+        }
+    } catch { }
+    return (Get-IpRedePorPlaca)
+}
+
+function Get-IpRedePorPlaca {
+    $virtuais = 'Hyper-V|vEthernet|VirtualBox|VMware|Virtual|TAP|TUN|VPN|WSL|Docker|Bluetooth|Loopback'
     $candidatos = @()
     foreach ($nic in [System.Net.NetworkInformation.NetworkInterface]::GetAllNetworkInterfaces()) {
         if ($nic.OperationalStatus -ne 'Up') { continue }
         if ($nic.NetworkInterfaceType -eq 'Loopback') { continue }
+        if (($nic.Name + ' ' + $nic.Description) -match $virtuais) { continue }
         $props = $nic.GetIPProperties()
         $gateways = @($props.GatewayAddresses | Where-Object {
             $_.Address.AddressFamily -eq 'InterNetwork' -and $_.Address.ToString() -ne '0.0.0.0'
