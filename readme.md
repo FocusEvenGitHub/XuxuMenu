@@ -107,6 +107,7 @@ Após as alterações, clique em **"💾 Salvar Tudo"** – o cardápio é atual
 **Como funciona o envio para o celular**
 
 - Só funciona com o cardápio aberto pelo `iniciar.bat`.
+- Se aparecer o aviso de abrir pelo `iniciar.bat` mesmo assim, um servidor antigo pode ter ficado aberto: rode o `parar.bat` e depois o `iniciar.bat`. Para conferir, abra `http://localhost:8090/api/compartilhar` no navegador: a versão atual responde `{"erro":"metodo"}`.
 - O celular precisa estar no **mesmo Wi-Fi** do computador.
 - O link do QR Code vale **10 minutos** e usa um código aleatório; a imagem fica só na memória do servidor (nada é gravado em disco).
 - Para isso, o servidor abre a porta **8091** na rede local. Ela entrega **apenas** a imagem compartilhada: o cardápio, o admin e os arquivos do projeto continuam acessíveis só pelo próprio computador.

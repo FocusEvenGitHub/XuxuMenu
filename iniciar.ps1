@@ -13,12 +13,18 @@ $validadeMinutos = 10      # validade do link do QR Code
 $maxImagens      = 5       # imagens guardadas ao mesmo tempo (em memoria)
 $tamanhoMaximo   = 10MB
 
-# Salva o PID para poder parar depois
-$pid | Out-File -FilePath "$env:TEMP\xuxumenu.pid" -Force
-
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
-$listener.Start()
+try {
+    $listener.Start()
+} catch {
+    # Porta ocupada (outro programa ou servidor antigo): nao sobe uma copia quebrada
+    Write-Host "Nao foi possivel usar a porta $port. Rode o parar.bat e tente de novo."
+    exit 1
+}
+
+# Salva o PID para poder parar depois (so depois de o servidor subir de fato)
+$pid | Out-File -FilePath "$env:TEMP\xuxumenu.pid" -Force
 
 # Abre o navegador
 Start-Process "http://localhost:$port"
