@@ -1,20 +1,19 @@
 // js/share.js
-// Gera uma imagem do cardápio (900×1600, igual à tela do caixa) e ajuda a postar no Instagram.
+// Gera uma imagem do cardápio (900×1600, igual à tela do caixa) para baixar no PC
+// ou levar para o celular por QR Code.
 //
 // Fluxo:
-//   1. Admin → "📸 Postar no Instagram"
+//   1. Admin → "Baixar / Compartilhar Cardápio"
 //   2. A imagem é gerada e aparece numa pré-visualização
-//   3. Celular: botão "Compartilhar" abre o menu do sistema → Instagram → Story
-//      PC: botão "Baixar e abrir" salva o JPG e abre o Meta Business Suite
+//   3. "Baixar no computador": salva o JPG na pasta Downloads
+//      "Enviar para o celular": envia o JPG ao servidor local (iniciar.ps1), que devolve
+//      um link temporário na rede Wi-Fi; o link vira um QR Code para o celular escanear.
 //
-// Depende de js/vendor/html-to-image.js (carregado no index.html, expõe window.htmlToImage).
-
-// Página aberta no PC depois de baixar a imagem.
-// O Meta Business Suite permite publicar Stories pelo computador (o instagram.com não).
-const LINK_POSTAR_PC = 'https://business.facebook.com/';
+// Depende de (carregados no index.html):
+//   js/vendor/html-to-image.js → window.htmlToImage (captura da tela)
+//   js/vendor/qrcode.js        → window.qrcode      (QR Code, funciona sem internet)
 
 // Tamanho exato do layout (feito pixel a pixel para a tela do caixa).
-// 900×1600 já é 9:16, o formato de Story; o Instagram ajusta a resolução sozinho.
 const LARGURA = 900;
 const ALTURA = 1600;
 const ESCALA = 1;
@@ -24,7 +23,8 @@ let urlAtual = null;
 
 // ─── API pública ───────────────────────────────────────
 
-export async function abrirPostagemInstagram() {
+export async function abrirCompartilharCardapio() {
+  clearInterval(timerValidade);
   criarOverlay();
   mostrarEstado('gerando');
 
@@ -102,24 +102,7 @@ function nomeArquivo() {
 
 // ─── Ações ─────────────────────────────────────────────
 
-function podeCompartilharArquivo() {
-  // Só usa o menu de compartilhar em celular/tablet: no PC ele não leva ao Instagram.
-  const toque = window.matchMedia('(pointer: coarse)').matches;
-  return toque && !!arquivoAtual && !!navigator.canShare?.({ files: [arquivoAtual] });
-}
-
-async function compartilhar() {
-  // Chamado direto no clique (o navegador exige um toque recente do usuário)
-  try {
-    await navigator.share({ files: [arquivoAtual] });
-    fecharOverlay();
-  } catch (err) {
-    if (err.name !== 'AbortError') {
-      console.error(err);
-      baixar();
-    }
-  }
-}
+let timerValidade = null;
 
 function baixar() {
   const a = document.createElement('a');
@@ -128,12 +111,79 @@ function baixar() {
   document.body.appendChild(a);
   a.click();
   a.remove();
+  mostrarEstado('baixado');
 }
 
-function baixarEAbrir() {
-  baixar();
-  window.open(LINK_POSTAR_PC, '_blank', 'noopener');
-  mostrarEstado('baixado');
+async function enviarParaCelular() {
+  mostrarEstado('enviando');
+
+  let resposta, dados = {};
+  try {
+    resposta = await fetch('/api/compartilhar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'image/jpeg', 'X-XuxuMenu': '1' },
+      body: arquivoAtual
+    });
+    dados = await resposta.json().catch(() => ({}));
+  } catch (err) {
+    console.error(err);
+    return mostrarErroCelular('servidor');
+  }
+
+  if (!resposta.ok || !dados.url) {
+    // 404/405/501: página aberta sem o iniciar.bat (Live Server, Python...)
+    const codigo = dados.erro || ([404, 405, 501].includes(resposta.status) ? 'servidor' : 'desconhecido');
+    return mostrarErroCelular(codigo, dados);
+  }
+
+  mostrarQrCode(dados.url, dados.validadeSegundos || 600);
+}
+
+function mostrarQrCode(url, validadeSegundos) {
+  const qr = window.qrcode(0, 'M');
+  qr.addData(url);
+  qr.make();
+
+  const overlay = document.getElementById('shareOverlay');
+  overlay.querySelector('[data-campo="qr"]').innerHTML =
+    qr.createSvgTag({ cellSize: 6, margin: 4, scalable: true, alt: 'QR Code do cardápio' });
+  overlay.querySelector('[data-campo="url"]').textContent = url;
+  mostrarEstado('celular');
+
+  // Contagem regressiva da validade do link
+  const fim = Date.now() + validadeSegundos * 1000;
+  const campo = overlay.querySelector('[data-campo="validade"]');
+  clearInterval(timerValidade);
+  const atualizar = () => {
+    const resta = Math.max(0, Math.round((fim - Date.now()) / 1000));
+    campo.textContent = `${Math.floor(resta / 60)}:${String(resta % 60).padStart(2, '0')}`;
+    if (resta === 0) {
+      clearInterval(timerValidade);
+      mostrarErroCelular('expirado');
+    }
+  };
+  atualizar();
+  timerValidade = setInterval(atualizar, 1000);
+}
+
+const MENSAGENS_ERRO = {
+  servidor:      'Não foi possível falar com o servidor do cardápio. Abra o cardápio pelo <b>iniciar.bat</b> e tente de novo.',
+  sem_rede:      'Este computador não está conectado a nenhuma rede (Wi-Fi ou cabo). Conecte-o e tente de novo.',
+  porta_ocupada: 'A porta {porta} já está sendo usada por outro programa. Feche o cardápio (parar.bat), abra de novo pelo iniciar.bat e tente outra vez.',
+  tamanho:       'A imagem ficou grande demais para enviar.',
+  expirado:      'O QR Code expirou. Gere um novo para continuar.',
+  desconhecido:  'Algo deu errado ao preparar o QR Code. Tente de novo.'
+};
+
+function mostrarErroCelular(codigo, dados = {}) {
+  clearInterval(timerValidade);
+  const texto = (MENSAGENS_ERRO[codigo] || MENSAGENS_ERRO.desconhecido)
+    .replace('{porta}', dados.porta || '8091');
+  const overlay = document.getElementById('shareOverlay');
+  overlay.querySelector('[data-campo="erro-celular"]').innerHTML = texto;
+  overlay.querySelector('[data-acao="enviar-celular"][data-tentar]').textContent =
+    codigo === 'expirado' ? '🔄 Gerar novo QR Code' : '🔄 Tentar de novo';
+  mostrarEstado('celular-erro');
 }
 
 // ─── Interface (overlay de pré-visualização) ───────────
@@ -150,7 +200,7 @@ function criarOverlay() {
   overlay.innerHTML = `
     <div class="share-box">
       <span class="modal-fechar" data-acao="fechar">&times;</span>
-      <h2>📸 Postar no Instagram</h2>
+      <h2>Baixar / Compartilhar</h2>
 
       <div class="share-estado" data-estado="gerando">
         <div class="share-spinner"></div>
@@ -164,23 +214,43 @@ function criarOverlay() {
 
       <div class="share-estado" data-estado="pronto baixado">
         <img id="shareImgPreview" class="share-preview" alt="Pr&eacute;via do card&aacute;pio">
-
-        <div class="share-acoes" data-so="celular">
-          <button class="share-btn-principal" data-acao="compartilhar">📤 Compartilhar no Instagram</button>
-          <p class="share-dica">No menu que abrir, toque em <b>Instagram</b> e escolha <b>Story</b>.</p>
-          <button class="share-btn-secundario" data-acao="baixar">⬇️ S&oacute; baixar a imagem</button>
-        </div>
-
-        <div class="share-acoes" data-so="pc">
-          <button class="share-btn-principal" data-acao="baixar-abrir">⬇️ Baixar e abrir o Instagram</button>
-          <p class="share-dica" data-estado-dica="pronto">
-            A imagem ser&aacute; salva em <b>Downloads</b> e o Meta Business Suite vai abrir.
-          </p>
+        <div class="share-acoes">
+          <button class="share-btn-principal" data-acao="baixar">💻 Baixar no computador</button>
+          <button class="share-btn-principal" data-acao="enviar-celular">📱 Enviar para o celular</button>
           <p class="share-dica share-dica-ok" data-estado-dica="baixado">
-            ✅ Imagem salva em <b>Downloads</b>.<br>
-            No Meta Business Suite, crie um <b>Story</b> e escolha o arquivo
-            <b data-campo="nome-arquivo"></b>.
+            ✅ Imagem salva na pasta <b>Downloads</b> (<span data-campo="nome-arquivo"></span>).
           </p>
+        </div>
+      </div>
+
+      <div class="share-estado" data-estado="enviando">
+        <div class="share-spinner"></div>
+        <p>Preparando o QR Code...</p>
+      </div>
+
+      <div class="share-estado" data-estado="celular">
+        <div class="share-qr" data-campo="qr"></div>
+        <p class="share-dica"><b>Aponte a c&acirc;mera do celular para o QR Code</b> e toque em <b>Baixar imagem</b>.</p>
+        <p class="share-dica">O celular precisa estar no <b>mesmo Wi-Fi</b> deste computador.
+          V&aacute;lido por <b data-campo="validade"></b>.</p>
+        <details class="share-ajuda">
+          <summary>O celular n&atilde;o abriu a p&aacute;gina?</summary>
+          <ul>
+            <li>Confira se o celular est&aacute; no Wi-Fi da loja, e n&atilde;o nos dados m&oacute;veis.</li>
+            <li>Na primeira vez, o Windows pode mostrar um aviso do <b>Firewall</b>: clique em <b>Permitir acesso</b>.
+              Se o aviso n&atilde;o apareceu ou foi recusado, veja o readme.</li>
+            <li>Voc&ecirc; tamb&eacute;m pode digitar o endere&ccedil;o no navegador do celular:<br>
+              <code data-campo="url"></code></li>
+          </ul>
+        </details>
+        <button class="share-btn-secundario" data-acao="voltar">← Voltar</button>
+      </div>
+
+      <div class="share-estado" data-estado="celular-erro">
+        <p class="share-erro" data-campo="erro-celular"></p>
+        <div class="share-acoes">
+          <button class="share-btn-principal" data-acao="enviar-celular" data-tentar>🔄 Tentar de novo</button>
+          <button class="share-btn-secundario" data-acao="voltar">← Voltar</button>
         </div>
       </div>
     </div>
@@ -191,10 +261,10 @@ function criarOverlay() {
     if (e.target === overlay) return fecharOverlay();
     const acao = e.target.closest('[data-acao]')?.dataset.acao;
     if (acao === 'fechar') fecharOverlay();
-    if (acao === 'tentar') abrirPostagemInstagram();
-    if (acao === 'compartilhar') compartilhar();
+    if (acao === 'tentar') abrirCompartilharCardapio();
     if (acao === 'baixar') baixar();
-    if (acao === 'baixar-abrir') baixarEAbrir();
+    if (acao === 'enviar-celular') enviarParaCelular();
+    if (acao === 'voltar') { clearInterval(timerValidade); mostrarEstado('pronto'); }
   });
 
   overlay.style.display = 'flex';
@@ -208,10 +278,6 @@ function mostrarEstado(estado) {
     el.style.display = el.dataset.estado.split(' ').includes(estado) ? '' : 'none';
   });
 
-  const celular = podeCompartilharArquivo();
-  overlay.querySelector('[data-so="celular"]').style.display = celular ? '' : 'none';
-  overlay.querySelector('[data-so="pc"]').style.display = celular ? 'none' : '';
-
   overlay.querySelectorAll('[data-estado-dica]').forEach(el => {
     el.style.display = el.dataset.estadoDica === estado ? '' : 'none';
   });
@@ -221,6 +287,7 @@ function mostrarEstado(estado) {
 }
 
 function fecharOverlay() {
+  clearInterval(timerValidade);
   const overlay = document.getElementById('shareOverlay');
   if (overlay) overlay.style.display = 'none';
 }

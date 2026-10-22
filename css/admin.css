@@ -238,31 +238,31 @@ button:hover {
     font-size: 16px;
 }
 
-/* ── Instagram (admin) ─────────────────── */
-.admin-instagram {
+/* ── Baixar / Compartilhar (admin) ─────── */
+.admin-compartilhar {
     text-align: center;
     margin-top: 18px;
     padding-top: 16px;
     border-top: 1px dashed #b9aea4;
 }
 
-#btnPostarInstagram {
-    background: linear-gradient(45deg, #f09433, #dc2743 50%, #bc1888);
+#btnCompartilharCardapio {
+    background: var(--chocolate);
     padding: 10px 28px;
     font-size: 16px;
 }
 
-#btnPostarInstagram:hover {
-    filter: brightness(0.92);
+#btnCompartilharCardapio:hover {
+    background: var(--preto);
 }
 
-.admin-instagram small {
+.admin-compartilhar small {
     display: block;
     margin-top: 6px;
     color: #5d5650;
 }
 
-/* ── Instagram (pré-visualização) ──────── */
+/* ── Baixar / Compartilhar (pré-visualização) ── */
 .share-overlay {
     display: none;
     position: fixed;
@@ -291,14 +291,14 @@ button:hover {
 .share-box h2 {
     font-family: 'Bebas Neue', Impact, sans-serif;
     font-size: 32px;
-    margin-bottom: 14px;
+    margin: 0 24px 14px;
 }
 
 .share-preview {
     display: block;
     width: auto;
     max-width: 100%;
-    max-height: 55vh;
+    max-height: 52vh;
     aspect-ratio: 9 / 16;
     margin: 0 auto 16px;
     border-radius: 8px;
@@ -316,25 +316,78 @@ button:hover {
     width: 100%;
     padding: 14px 20px;
     font-size: 17px;
-    background: linear-gradient(45deg, #f09433, #dc2743 50%, #bc1888);
-}
-
-.share-btn-principal:hover {
-    filter: brightness(0.92);
 }
 
 .share-btn-secundario {
     background: #555;
+    margin-top: 12px;
+}
+
+.share-btn-secundario:hover {
+    background: #333;
 }
 
 .share-dica {
     font-size: 14px;
     line-height: 1.4;
     color: #3a3430;
+    margin-top: 8px;
 }
 
 .share-dica-ok {
     color: #2e6b31;
+}
+
+.share-erro {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--vinho);
+    background: #fbe3e1;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.share-qr {
+    width: 240px;
+    height: 240px;
+    margin: 4px auto 10px;
+    background: white;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.share-qr svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.share-ajuda {
+    margin-top: 12px;
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #3a3430;
+}
+
+.share-ajuda summary {
+    cursor: pointer;
+    font-weight: 700;
+    text-align: center;
+}
+
+.share-ajuda ul {
+    margin: 8px 0 0 18px;
+}
+
+.share-ajuda li {
+    margin-bottom: 6px;
+}
+
+.share-ajuda code {
+    word-break: break-all;
+    font-size: 12px;
 }
 
 .share-spinner {
