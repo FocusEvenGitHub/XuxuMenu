@@ -3,6 +3,7 @@
 
 import { getData, setData, getImage, saveImage, fileToDataUrl } from './storage.js';
 import { renderCardapio } from './ui.js';
+import { abrirPostagemInstagram } from './share.js';
 
 const PRODUCT_IDS = ['pratoDia', 'picadinho', 'parmegiana', 'salada', 'luis', 'barca'];
 
@@ -68,6 +69,10 @@ function criarModalAdmin() {
       <div style="text-align:center; margin-top:24px;">
         <button id="btnSalvarTudo" style="padding:12px 40px; font-size:18px;">💾 Salvar Tudo</button>
       </div>
+      <div class="admin-instagram">
+        <button id="btnPostarInstagram">📸 Postar no Instagram</button>
+        <small>Gera uma imagem do card&aacute;pio salvo (900×1600) para postar como Story.</small>
+      </div>
       <div id="msgAdmin" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
     </div>
   `;
@@ -88,6 +93,12 @@ function criarModalAdmin() {
 
   // Save button
   document.getElementById('btnSalvarTudo').addEventListener('click', salvarTudo);
+
+  // Instagram: fecha o admin e gera a imagem do cardápio
+  document.getElementById('btnPostarInstagram').addEventListener('click', () => {
+    fecharModalAdmin();
+    abrirPostagemInstagram();
+  });
 
   // Start on first tab
   switchTab('pratoDia');

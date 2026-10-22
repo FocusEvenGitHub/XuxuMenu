@@ -16,6 +16,7 @@ As alterações são salvas no navegador e persistem entre acessos.
 - **Persistência via `localStorage`** – nada se perde ao fechar o navegador
 - **Launcher de 1 clique** (`iniciar.bat`) – sobe servidor local oculto e abre o navegador
 - **Valores padrão embutidos** – ao abrir num PC novo, o cardápio já aparece completo
+- **📸 Postar no Instagram** – gera uma imagem do cardápio em 900×1600 (igual à tela do caixa, formato Story) direto do admin
 
 ---
 
@@ -36,6 +37,9 @@ XuxuMenu/
 │   ├── storage.js         ← Modelo de dados + localStorage
 │   ├── ui.js              ← Renderização do cardápio
 │   ├── admin.js           ← Modal admin com 7 abas
+│   ├── share.js           ← Imagem do cardápio + postagem no Instagram
+│   ├── vendor/
+│   │   └── html-to-image.js ← Biblioteca de captura (MIT)
 │   └── app.js             ← Inicialização
 ├── img/
 │   ├── logo.png           ← Clique nela para abrir o admin
@@ -87,6 +91,16 @@ Cada aba de produto permite editar:
 A aba **"Adicionais"** permite editar o título da seção e a lista completa de itens do "Monte seu Prato" (nome + preço).
 
 Após as alterações, clique em **"💾 Salvar Tudo"** – o cardápio é atualizado na hora.
+
+### 4. Postar no Instagram
+
+1. Clique na **logo** para abrir o admin e depois em **"📸 Postar no Instagram"**.
+2. Aparece uma prévia da imagem do cardápio (900×1600, o mesmo que aparece na tela do caixa).
+3. **No PC:** clique em **"Baixar e abrir o Instagram"**. A imagem vai para a pasta *Downloads* e o Meta Business Suite abre; lá, crie um **Story** e escolha o arquivo `cardapio-AAAA-MM-DD.jpg`.
+4. **No celular:** toque em **"Compartilhar no Instagram"**, escolha **Instagram → Story** e publique.
+
+> A imagem usa o cardápio **salvo**: salve as alterações antes de postar.
+> É preciso estar com internet para as fontes saírem iguais às da tela.
 
 ---
 
